@@ -31,7 +31,8 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha --recursive test/unit",
     "coverage": "node --harmony --harmony_arrow_functions ./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha --report html -- -R spec --recursive test/unit",
-    "build": "rm -rf dist/* && ./node_modules/.bin/babel src --out-dir dist --source-maps"
+    "build": "rm -rf dist/* && ./node_modules/.bin/babel src --out-dir dist --source-maps",
+    "lwc-local": "src/cli/lwc.js"
   },
   "bin": {
     "lwc": "dist/cli/lwc.js"
