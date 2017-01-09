@@ -81,6 +81,8 @@ var LimedocsWikiConverter = (function () {
 
       this.pages = [];
       this.toc.getLinks().forEach(function (link) {
+        var linkSplits = link.split(new RegExp('[\\|/]'));
+        link = linkSplits.length > 0 ? linkSplits[linkSplits.length - 1] : linkSplits[0];
         if (_this.mdAliases[link]) {
           _this.pages.push({
             file: _this.mdAliases[link],

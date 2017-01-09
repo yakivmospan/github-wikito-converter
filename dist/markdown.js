@@ -9,7 +9,7 @@ var marked = require('marked'),
     fs = require('fs'),
     path = require('path'),
     util = require('util'),
-    datauri = require('datauri'),
+    datauri = require('datauri').sync,
     helpers = require('./helpers');
 
 var Markdown = (function () {
@@ -17,6 +17,7 @@ var Markdown = (function () {
     _classCallCheck(this, Markdown);
 
     this.wikiPath = wikiPath;
+    this.tocLinks = [];
     this.firstTocLiClassProcessed = false;
     this.setupMainRenderer().setupTocRenderer();
   }
@@ -36,6 +37,11 @@ var Markdown = (function () {
       this.mainRenderer.link = function (href, title, text) {
         if (!href.match(/^https?:\/\//)) {
           href = '#' + helpers.getPageIdFromFilename(href);
+        } else if (self.tocLinks && self.tocLinks.indexOf(href) != -1) {
+          var hrefSplits = href.split(new RegExp('[\\|/]'));
+          if (hrefSplits.length > 0) {
+            href = '#' + helpers.getPageIdFromFilename(hrefSplits[hrefSplits.length - 1]);
+          }
         }
         return '<a href="' + href + '">' + text + '</a>';
       };
@@ -43,8 +49,10 @@ var Markdown = (function () {
       this.mainRenderer.image = function (href, title, text) {
         if (!href.match(/^https?:\/\//)) {
           href = path.resolve(self.wikiPath, href);
+          return util.format('<img src="%s" />', datauri(href));
+        } else {
+          return util.format('<img src="%s" />', href);
         }
-        return util.format('<img src="%s" />', datauri(href));
       };
       return this;
     }
@@ -76,6 +84,7 @@ var Markdown = (function () {
       };
 
       this.tocRenderer.link = function (href, title, text) {
+        self.tocLinks.push(href);
         href = helpers.getPageIdFromFilename(href);
         return '<a href="#' + href + '">' + text + '</a>';
       };

@@ -75,6 +75,8 @@ class LimedocsWikiConverter {
   computePages() {
     this.pages = []
     this.toc.getLinks().forEach(link => {
+      var linkSplits = link.split(new RegExp('[\\|/]'))
+      link = linkSplits.length > 0 ? linkSplits[linkSplits.length - 1] : linkSplits[0]
       if (this.mdAliases[link]) {
         this.pages.push({
           file: this.mdAliases[link],

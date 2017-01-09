@@ -31,7 +31,8 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha --recursive test/unit",
     "coverage": "node --harmony --harmony_arrow_functions ./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha --report html -- -R spec --recursive test/unit",
-    "build": "rm -rf dist/* && ./node_modules/.bin/babel src --out-dir dist --source-maps"
+    "build": "rm -rf dist/* && ./node_modules/.bin/babel src --out-dir dist --source-maps",
+    "lwc-local": "src/cli/lwc.js"
   },
   "bin": {
     "lwc": "dist/cli/lwc.js"
@@ -46,12 +47,12 @@
     "bluebird": "^2.9.34",
     "bootstrap": "^3.3.5",
     "commander": "^2.8.1",
-    "datauri": "^0.7.1",
+    "datauri": "^1.0.5",
     "defaults": "^1.0.2",
     "fs-extra": "^0.23.1",
     "highlight.js": "^8.7.0",
     "jquery": "^2.1.4",
-    "marked": "^0.3.5",
+    "marked": "^0.3.6",
     "node-dir": "^0.1.9",
     "open": "0.0.5",
     "winston": "^1.0.1",

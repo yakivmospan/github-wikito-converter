@@ -9,7 +9,7 @@ var fs = require('fs-extra'),
     util = require('util'),
     logger = require('./logger'),
     Promise = require("bluebird"),
-    datauri = require('datauri');
+    datauri = require('datauri').sync;
 
 var BaseWriter = (function () {
 

@@ -27,3 +27,8 @@ build/Release
 node_modules
 .idea
 doc-test
+
+### macOS
+*.DS_Store
+.AppleDouble
+.LSOverride
