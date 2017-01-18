@@ -1,9 +1,11 @@
 {
-  "name": "limedocs-wiki-converter",
-  "version": "0.1.12",
-  "description": "Generate HTML & PDF documentation from you Github wiki or any other markdown-based wiki",
+  "name": "github-wikito-converter",
+  "version": "1.0.0",
+  "description": "Generate HTML & PDF documentation from Github wiki or any other markdown-based wiki.",
   "keywords": [
     "wiki",
+    "wikito",
+    "wiki to",
     "wiki converter",
     "wiki convert",
     "wiki2html",
@@ -31,16 +33,17 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha --recursive test/unit",
     "coverage": "node --harmony --harmony_arrow_functions ./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha --report html -- -R spec --recursive test/unit",
-    "build": "rm -rf dist/* && ./node_modules/.bin/babel src --out-dir dist --source-maps"
+    "build": "rm -rf dist/* && ./node_modules/.bin/babel src --out-dir dist --source-maps",
+    "build-and-install-g": "npm run build && npm install -g"
   },
   "bin": {
-    "lwc": "dist/cli/lwc.js"
+    "gwtc": "dist/cli/gwtc.js"
   },
   "engines": {
     "node": ">= 0.10",
     "iojs": ">= 1.0"
   },
-  "author": "Matthias ETIENNE <matthias@etienne.in> (https://github.com/mattallty)",
+  "author": "Yakiv Mospan <yakiv.mospan@gmail.com> (https://github.com/yakivmospan)",
   "license": "MIT",
   "dependencies": {
     "bluebird": "^2.9.34",

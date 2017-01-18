@@ -16,7 +16,7 @@ var Promise = require("bluebird"),
     helpers = require('./helpers'),
     logger = require('./logger');
 
-var LimedocsWikiConverter = (function () {
+var WikiConverter = (function () {
   /**
    * GWC Constructor
    *
@@ -25,8 +25,8 @@ var LimedocsWikiConverter = (function () {
    * @constructor
    */
 
-  function LimedocsWikiConverter(wiki_path, options) {
-    _classCallCheck(this, LimedocsWikiConverter);
+  function WikiConverter(wiki_path, options) {
+    _classCallCheck(this, WikiConverter);
 
     if (!wiki_path || fs.statSync(wiki_path).isDirectory() === false) {
       throw new TypeError('wiki_path is not a valid directory.');
@@ -38,7 +38,7 @@ var LimedocsWikiConverter = (function () {
     this.computePaths().computeOptions(options).computeCssFiles().computeJsFiles().checkTocLevel().checkOutputFormat();
   }
 
-  _createClass(LimedocsWikiConverter, [{
+  _createClass(WikiConverter, [{
     key: "generate",
     value: function generate() {
 
@@ -73,7 +73,7 @@ var LimedocsWikiConverter = (function () {
 
     /**
      * @private
-     * @returns {LimedocsWikiConverter}
+     * @returns {wiki-converter}
      */
   }, {
     key: "computePages",
@@ -119,7 +119,7 @@ var LimedocsWikiConverter = (function () {
 
     /**
      * @private
-     * @returns {LimedocsWikiConverter}
+     * @returns {wiki-converter}
      */
   }, {
     key: "computePaths",
@@ -133,7 +133,7 @@ var LimedocsWikiConverter = (function () {
 
     /**
      * @private
-     * @returns {LimedocsWikiConverter}
+     * @returns {wiki-converter}
      */
   }, {
     key: "computeCssFiles",
@@ -147,7 +147,7 @@ var LimedocsWikiConverter = (function () {
 
     /**
      * @private
-     * @returns {LimedocsWikiConverter}
+     * @returns {wiki-converter}
      */
   }, {
     key: "computeJsFiles",
@@ -181,7 +181,7 @@ var LimedocsWikiConverter = (function () {
         output: path.resolve('./'),
         tocFile: GWCFinder.searchForFile(['_Toc.html', '_Sidebar.html', '_Toc.md', '_Sidebar.md'], this.wikiPath),
         tocLevel: 3, // between 1 and 4
-        highlightTheme: 'darkula',
+        highlightTheme: 'github',
         userCssFile: null
       };
 
@@ -253,12 +253,12 @@ var LimedocsWikiConverter = (function () {
     }
   }]);
 
-  return LimedocsWikiConverter;
+  return WikiConverter;
 })();
 
-Object.defineProperty(LimedocsWikiConverter, 'package', {
+Object.defineProperty(WikiConverter, 'package', {
   value: require('../package')
 });
 
-module.exports = LimedocsWikiConverter;
-//# sourceMappingURL=limedocs-wiki-converter.js.map
+module.exports = WikiConverter;
+//# sourceMappingURL=wiki-converter.js.map

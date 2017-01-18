@@ -30,30 +30,30 @@ var HtmlWriter = (function (_BaseWriter) {
     key: "write",
     value: function write() {
       var html = this.buildHeader(),
-          pages = this.ld.getPages();
+          pages = this.converter.getPages();
 
       logger.debug('Generating html: %d pages to generate', pages.length);
 
-      this.ld.getPages().forEach(function (page) {
+      this.converter.getPages().forEach(function (page) {
         var pageId = helpers.getPageIdFromFilenameOrLink(page.file);
-        html += "<p class=\"page\" id=\"" + pageId + "\"></p>\n" + page.html;
+        html += "<p class=\"page\" id=\"" + pageId + "\"></p><h1>" + page.title + "</h1>\n" + page.html;
       }, this);
 
       html += this.buildFooter();
       return _get(Object.getPrototypeOf(HtmlWriter.prototype), "write", this).call(this, this.getFilename(), html);
     }
   }, {
+    key: "buildHeader",
+    value: function buildHeader() {
+
+      var htmlHeader = "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>" + this.converter.getOption('title') + "</title>\n    " + this.getCssTags() + "\n    <style>" + this.getExtraCss() + "</style>\n    " + this.getJsTags() + "\n  </head>\n  <body id=\"page-top\" class=\"html-doc\">\n    <!-- Fixed navbar -->\n    <div class=\"navbar navbar-default navbar-fixed-top\">\n      <div class=\"container\">\n        <div class=\"navbar-header\">\n          <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">\n            <span class=\"sr-only\">Toggle navigation</span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n          </button>\n          <a class=\"navbar-brand doc-title\" href=\"#page-top\">" + this.converter.getOption('title') + "</a>\n        </div>\n        <div id=\"navbar\" class=\"navbar-collapse collapse\">\n          <ul class=\"nav navbar-nav\">\n\n          </ul>\n        </div><!--/.nav-collapse -->\n      </div>\n    </div>\n    <div id=\"documentation-container\" class=\"container\">\n      <div class=\"row\">\n        <div class=\"col-md-3\"><div class=\"nav-container\"><div class=\"nav-inner\" id=\"scroll-spy\"><span class=\"toc\"></span>" + this.converter.getToc().getHtml() + "</div></div></div>\n        <div class=\"col-md-9\">\n";
+      return htmlHeader;
+    }
+  }, {
     key: "buildFooter",
     value: function buildFooter() {
       var footer = "\n        </div> <!-- /div.col-md-9 -->\n      </div> <!-- /div.row -->\n    </div> <!-- /div.container -->\n  </body>\n  <script>\n    $('body').scrollspy({ target: '#scroll-spy', offset: 40 })\n  </script>\n</html>";
       return footer;
-    }
-  }, {
-    key: "buildHeader",
-    value: function buildHeader() {
-
-      var htmlHeader = "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>" + this.ld.getOption('title') + "</title>\n    " + this.getCssTags() + "\n    <style>" + this.getExtraCss() + "</style>\n    " + this.getJsTags() + "\n  </head>\n  <body id=\"page-top\" class=\"html-doc\">\n    <!-- Fixed navbar -->\n    <div class=\"navbar navbar-default navbar-fixed-top\">\n      <div class=\"container\">\n        <div class=\"navbar-header\">\n          <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">\n            <span class=\"sr-only\">Toggle navigation</span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n          </button>\n          <a class=\"navbar-brand gwc-doc-title\" href=\"#page-top\">" + this.ld.getOption('title') + "</a>\n        </div>\n        <div id=\"navbar\" class=\"navbar-collapse collapse\">\n          <ul class=\"nav navbar-nav\">\n\n          </ul>\n          <ul class=\"nav navbar-nav navbar-right gwc-navbar-right\">\n            <li><a class=\"ld-powered-link\" href=\"https://github.com/limedocs/limedocs-wiki-converter\"><img class=\"ld-powered-img\" src=\"" + this.getLimedocsGeneratedImgData() + "\"></a></li>\n          </ul>\n        </div><!--/.nav-collapse -->\n      </div>\n    </div>\n    <div id=\"documentation-container\" class=\"container\">\n      <div class=\"row\">\n        <div class=\"col-md-3\"><div class=\"gwc-nav-container\"><div class=\"gwc-nav-inner\" id=\"scroll-spy\"><span class=\"toc\"></span>" + this.ld.getToc().getHtml() + "</div></div></div>\n        <div class=\"col-md-9 ld-main\">\n";
-      return htmlHeader;
     }
   }]);
 

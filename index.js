@@ -1,1 +1,1 @@
-module.exports = require('./dist/limedocs-wiki-converter')
+module.exports = require('./dist/wiki-converter')

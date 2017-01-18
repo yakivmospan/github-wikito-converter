@@ -55,7 +55,7 @@ class Markdown {
 
     this.tocRenderer.list = function(body, ordered) {
       var tag = ordered ? 'ol' : 'ul'
-      return `<${tag} class="nav gwc-nav">${body}</${tag}>`
+      return `<${tag} class="nav">${body}</${tag}>`
     }
 
     this.tocRenderer.listitem = function(text) {

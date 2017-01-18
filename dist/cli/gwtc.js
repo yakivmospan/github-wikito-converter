@@ -8,13 +8,13 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var program = require('commander'),
-    LimedocsWikiConverter = require('../limedocs-wiki-converter');
+    WikiConverter = require('../wiki-converter');
 
 var Cli = (function () {
   function Cli() {
     _classCallCheck(this, Cli);
 
-    this.program = program.version(LimedocsWikiConverter['package'].version).usage('[options] <wiki-dir>').description('Convert a wiki').option("-f, --format <format>", "Format to convert to. Either html, pdf, or all [default: html]", 'html').option("-o, --output <output-dir>", "Output dir [default: './']", './').option("-t, --title <title>", "Wiki title [default: Documentation]", 'Documentation ').option("-d, --disable-inline-assets", "Disable inlining of css & js in html document").option("--toc <toc-file>", "Wiki TOC file").option("--toc-level <level>", "Table of contents deep level [default: 3]", 3).option("--highlight-theme <theme>", "Highlighter theme [default: darkula]", 'darkula').option("--css <css-file>", "Additional CSS file").option("-v --verbose", "Verbose mode");
+    this.program = program.version(WikiConverter['package'].version).usage('[options] <wiki-dir>').description('Convert a wiki').option("-f, --format <format>", "Format to convert to. Either html, pdf, or all [default: html]", 'html').option("-o, --output <output-dir>", "Output dir [default: './']", './').option("-t, --title <title>", "Wiki title [default: Documentation]", 'Documentation ').option("-d, --disable-inline-assets", "Disable inlining of css & js in html document").option("--toc <toc-file>", "Wiki TOC file").option("--toc-level <level>", "Table of contents deep level [default: 3]", 3).option("--highlight-theme <theme>", "Highlighter theme [default: github]", 'github').option("--css <css-file>", "Additional CSS file").option("-v --verbose", "Verbose mode");
   }
 
   _createClass(Cli, [{
@@ -37,7 +37,7 @@ var Cli = (function () {
         disableInlineAssets: this.program.disableInlineAssets || false
       };
 
-      var ld = new LimedocsWikiConverter(this.program.args[0], options);
+      var ld = new WikiConverter(this.program.args[0], options);
       ld.generate().then(function (result) {
         console.log(result.join('\n'));
         process.exit(0);
@@ -55,4 +55,4 @@ if (require.main === module) {
 }
 
 module.exports = Cli;
-//# sourceMappingURL=lwc.js.map
+//# sourceMappingURL=gwtc.js.map

@@ -5,14 +5,14 @@ var path = require('path')
 
 require('should')
 
-describe('LimedocsWikiConverter', function() {
+describe('WikiConverter', function() {
 
   var ld
 
   describe('new Ld()', function() {
     it('should throw a TypeError when passing no argument', function () {
       (function() {
-        new fixtures.Ld()
+        new fixtures.Converter()
       }).should.throw()
     })
   })
@@ -20,21 +20,21 @@ describe('LimedocsWikiConverter', function() {
   describe('new Ld("/this/does/not/exists")', function() {
     it('should throw a TypeError when passing an invalid directory path', function () {
       (function() {
-        new fixtures.Ld()('/this/does/not/exists')
+        new fixtures.Converter()('/this/does/not/exists')
       }).should.throw()
     })
   })
 
   describe('new Ld("<valid-path>")', function() {
-    it('should return a LimedocsWikiConverter instance', function () {
-      ld = new fixtures.Ld(fixtures.samples[0])
-      ld.should.be.instanceOf(fixtures.Ld)
+    it('should return a WikiConverter instance', function () {
+      ld = new fixtures.Converter(fixtures.samples[0])
+      ld.should.be.instanceOf(fixtures.Converter)
     })
   })
 
   describe('ld.computePages()', function() {
     it('should compute pages', function () {
-      //ld.computePages().should.be.instanceOf(fixtures.Ld)
+      //ld.computePages().should.be.instanceOf(fixtures.Converter)
     })
   })
 

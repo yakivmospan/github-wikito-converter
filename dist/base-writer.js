@@ -18,10 +18,10 @@ var BaseWriter = (function () {
    * @param {GWC} GWC instance
    */
 
-  function BaseWriter(ld) {
+  function BaseWriter(converter) {
     _classCallCheck(this, BaseWriter);
 
-    this.ld = ld;
+    this.converter = converter;
   }
 
   _createClass(BaseWriter, [{
@@ -46,17 +46,17 @@ var BaseWriter = (function () {
   }, {
     key: 'getFilename',
     value: function getFilename() {
-      return path.join(this.ld.getOption('output'), this.ld.getOption('filename') + '.' + this.getExtension());
+      return path.join(this.converter.getOption('output'), this.converter.getOption('filename') + '.' + this.getExtension());
     }
   }, {
     key: 'getCssTags',
     value: function getCssTags() {
-      return this.getAssetsTags(this.ld.getCssFiles(), 'css').join('\n');
+      return this.getAssetsTags(this.converter.getCssFiles(), 'css').join('\n');
     }
   }, {
     key: 'getJsTags',
     value: function getJsTags() {
-      return this.getAssetsTags(this.ld.getJsFiles(), 'js').join('\n');
+      return this.getAssetsTags(this.converter.getJsFiles(), 'js').join('\n');
     }
   }, {
     key: 'getLimedocsGeneratedImgData',
@@ -66,9 +66,9 @@ var BaseWriter = (function () {
   }, {
     key: 'getExtraCss',
     value: function getExtraCss() {
-      var tocLevel = this.ld.getOption('tocLevel'),
-          tocLevelBaseCss = '> .gwc-nav > li ';
-      return '.gwc-nav > li ' + tocLevelBaseCss.repeat(tocLevel) + '{display: none;}';
+      var tocLevel = this.converter.getOption('tocLevel'),
+          tocLevelBaseCss = '> .nav > li ';
+      return '.nav > li ' + tocLevelBaseCss.repeat(tocLevel) + '{display: none;}';
     }
   }, {
     key: 'getAssetsTags',
@@ -90,7 +90,7 @@ var BaseWriter = (function () {
         tplOut = '<link href="%s" rel="stylesheet" />';
       }
 
-      return this.ld.getOption('disableInlineAssets') ? util.format(tplOut, path.basename(file)) : util.format(tplIn, fs.readFileSync(file, { encoding: 'utf8' }));
+      return this.converter.getOption('disableInlineAssets') ? util.format(tplOut, path.basename(file)) : util.format(tplIn, fs.readFileSync(file, { encoding: 'utf8' }));
     }
   }]);
 

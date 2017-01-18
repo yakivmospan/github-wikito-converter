@@ -3,13 +3,13 @@
 "use strict"
 
 var program = require('commander')
-  , LimedocsWikiConverter = require('../limedocs-wiki-converter')
+  , WikiConverter = require('../wiki-converter')
 
 class Cli {
 
   constructor () {
 
-    this.program = program.version(LimedocsWikiConverter.package.version)
+    this.program = program.version(WikiConverter.package.version)
 
       .usage('[options] <wiki-dir>')
       .description('Convert a wiki')
@@ -23,7 +23,7 @@ class Cli {
       .option("--toc <toc-file>", "Wiki TOC file")
       .option("--toc-level <level>", "Table of contents deep level [default: 3]", 3)
 
-      .option("--highlight-theme <theme>", "Highlighter theme [default: darkula]", 'darkula')
+      .option("--highlight-theme <theme>", "Highlighter theme [default: github]", 'github')
 
       .option("--css <css-file>", "Additional CSS file")
       .option("-v --verbose", "Verbose mode")
@@ -47,7 +47,7 @@ class Cli {
       disableInlineAssets: this.program.disableInlineAssets || false
     }
 
-    var ld = new LimedocsWikiConverter(this.program.args[0], options)
+    var ld = new WikiConverter(this.program.args[0], options)
     ld.generate().then(function(result) {
       console.log(result.join('\n'))
       process.exit(0)

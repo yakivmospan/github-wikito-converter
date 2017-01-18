@@ -20,7 +20,7 @@ class PdfWriter extends BaseWriter {
   write() {
 
     var html = this.buildHeader(),
-        pages = this.ld.getPages(),
+        pages = this.converter.getPages(),
         filename = this.getFilename(),
         self = this
 
@@ -53,27 +53,23 @@ class PdfWriter extends BaseWriter {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>${this.ld.getOption('title')}</title>
+    <title>${this.converter.getOption('title')}</title>
     ${this.getCssTags()}
     <style>${this.getExtraCss()}</style>
     ${this.getJsTags()}
   </head>
   <body id="page-top" class="pdf-doc">
-    <!-- Fixed navbar -->
-    <div class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand doc-title">${this.ld.getOption('title')}</a>
-        </div>
-      </div>
+
+    <!-- Cover page -->
+    <div class='covertitle'>
+      <b>${this.converter.getOption('title')}</b>
     </div>
-    ${this.ld.getToc().getHtml()}
+
+    <!-- Cover page -->
+    <div class='nav-container'>
+      <h1 class='toc'></h1><br>
+    ${this.converter.getToc().getHtml()}
+    </div>
 `
     return htmlHeader
   }

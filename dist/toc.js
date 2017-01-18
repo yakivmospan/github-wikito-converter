@@ -16,10 +16,10 @@ var Toc = (function () {
    * @param {GWC} gwc
    */
 
-  function Toc(ld) {
+  function Toc(converter) {
     _classCallCheck(this, Toc);
 
-    this.ld = ld;
+    this.converter = converter;
     this.computeTocParts();
   }
 
@@ -48,7 +48,7 @@ var Toc = (function () {
       this.toc = {};
       this.toc.tocMd = this.getTocFileContents();
 
-      var convertedToc = this.ld.getMarkdownConverter().convertTocMarkdownString(this.toc.tocMd);
+      var convertedToc = this.converter.getMarkdownConverter().convertTocMarkdownString(this.toc.tocMd);
       this.toc.tocHtml = convertedToc.tocHtml;
       this.toc.tocItems = convertedToc.tocItems;
     }
@@ -60,7 +60,7 @@ var Toc = (function () {
   }, {
     key: 'getTocFileContents',
     value: function getTocFileContents() {
-      var tocFile = this.ld.getTocFile();
+      var tocFile = this.converter.getTocFile();
       if (tocFile) {
         return fs.readFileSync(tocFile, { encoding: 'utf8' });
       }
@@ -75,7 +75,7 @@ var Toc = (function () {
   }, {
     key: 'genTocFileContents',
     value: function genTocFileContents() {
-      return Object.keys(this.ld.getMarkdownFiles()).map(function (filename) {
+      return Object.keys(this.converter.getMarkdownFiles()).map(function (filename) {
         var basename = path.basename(filename);
         return util.format('- [%s](%s)', basename, basename);
       }).join('\n');

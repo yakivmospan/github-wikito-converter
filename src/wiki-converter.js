@@ -12,7 +12,7 @@ var Promise = require("bluebird")
   , helpers = require('./helpers')
   , logger = require('./logger')
 
-class LimedocsWikiConverter {
+class WikiConverter {
   /**
    * GWC Constructor
    *
@@ -71,7 +71,7 @@ class LimedocsWikiConverter {
 
   /**
    * @private
-   * @returns {LimedocsWikiConverter}
+   * @returns {wiki-converter}
    */
   computePages() {
     this.pages = []
@@ -109,7 +109,7 @@ class LimedocsWikiConverter {
 
   /**
    * @private
-   * @returns {LimedocsWikiConverter}
+   * @returns {wiki-converter}
    */
   computePaths() {
     this.assetsPath = path.resolve(path.join(__dirname, '..', 'assets'))
@@ -121,7 +121,7 @@ class LimedocsWikiConverter {
 
   /**
    * @private
-   * @returns {LimedocsWikiConverter}
+   * @returns {wiki-converter}
    */
   computeCssFiles() {
 
@@ -138,7 +138,7 @@ class LimedocsWikiConverter {
 
   /**
    * @private
-   * @returns {LimedocsWikiConverter}
+   * @returns {wiki-converter}
    */
   computeJsFiles() {
 
@@ -171,7 +171,7 @@ class LimedocsWikiConverter {
       output : path.resolve('./'),
       tocFile : GWCFinder.searchForFile(['_Toc.html', '_Sidebar.html', '_Toc.md', '_Sidebar.md'], this.wikiPath),
       tocLevel : 3, // between 1 and 4
-      highlightTheme : 'darkula',
+      highlightTheme : 'github',
       userCssFile : null
     }
 
@@ -234,8 +234,8 @@ class LimedocsWikiConverter {
   }
 }
 
-Object.defineProperty(LimedocsWikiConverter, 'package', {
+Object.defineProperty(WikiConverter, 'package', {
   value : require('../package')
 })
 
-module.exports = LimedocsWikiConverter
+module.exports = WikiConverter
