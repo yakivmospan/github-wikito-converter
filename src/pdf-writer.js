@@ -67,7 +67,7 @@ class PdfWriter extends BaseWriter {
 
     <!-- Cover page -->
     <div class='nav-container'>
-      <h1 class='toc'></h1><br>
+      <h1 class='toc'></h1>
     ${this.converter.getToc().getHtml()}
     </div>
 `

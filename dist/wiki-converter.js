@@ -33,8 +33,6 @@ var WikiConverter = (function () {
     }
 
     this.wikiPath = wiki_path;
-    this.markdownConverter = new GWCMarkdown(this.wikiPath);
-
     this.computePaths().computeOptions(options).computeCssFiles().computeJsFiles().checkTocLevel().checkOutputFormat();
   }
 
@@ -47,9 +45,10 @@ var WikiConverter = (function () {
       return new Promise((function (resolve, reject) {
 
         GWCFinder.searchMarkdownFiles(self.wikiPath).then((function (result) {
-
           this.mdFiles = result.files;
           this.mdAliases = result.aliases;
+
+          this.markdownConverter = new GWCMarkdown(this.wikiPath, this.mdAliases);
           this.toc = new GWCToc(self);
 
           this.copyAssets();
@@ -82,14 +81,11 @@ var WikiConverter = (function () {
 
       this.pages = [];
       this.toc.getItems().forEach(function (item) {
-        var link = helpers.getPageIdFromFilenameOrLink(item.link);
-        if (_this.mdAliases[link]) {
-          _this.pages.push({
-            title: item.title,
-            file: _this.mdAliases[link],
-            html: _this.markdownConverter.convertMarkdownFile(_this.mdAliases[link])
-          });
-        }
+        _this.pages.push({
+          title: item.title,
+          file: _this.mdAliases[item.pageId],
+          html: _this.markdownConverter.convertMarkdownFile(_this.mdAliases[item.pageId])
+        });
       }, this);
       return this;
     }

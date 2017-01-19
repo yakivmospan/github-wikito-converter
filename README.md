@@ -2,6 +2,8 @@
 
 Github Wikito Converter allows you to generate HTML & PDF documentation from your Github wiki or any other markdown-based wiki. It is build on top of [Limedocs Wiki Converter](https://github.com/limedocs/limedocs-wiki-converter) and contains new features and bug fixes, check the [release notes](https://github.com/yakivmospan/github-wikito-converter/releases) to see them.
 
+Check out sample [HTML](https://github.com/yakivmospan/github-wikito-converter/blob/develop/sampels/okhttp.html) and [PDF](https://github.com/yakivmospan/github-wikito-converter/blob/develop/sampels/okhttp.pdf) files generated from [okhttp](https://github.com/square/okhttp/wiki) wiki.
+
 # Prerequesites
 
 - [Node.js](https://nodejs.org/) or [io.js](https://iojs.org/en/index.html)
@@ -58,7 +60,12 @@ By default, *Github Wikito Converter* will check for the following files to use 
 - `_Toc.md`
 - `_Sidebar.md` (which is the default sidebar file on Github wikis)
 
-When finding a TOC, *gwtc* will only generate pages linked from this TOC.
+When finding a TOC, *gwtc* will only generate pages linked from this TOC. Supported link formats are:
+
+- Markdown links with local path `[Call Log](Call-Log)` / `[Log](Call-Log.md)` / `[Calls](/Call-Log.md)`;
+- Markdown links with remote (http/https) path `[Calls](https://github.com/yourrepo/someproject/wiki/Call-Log)`.
+  Only those links that are placed in TOC will be converted to local page ids;
+- Github wiki links `[[Call Log]]` / `[[Call-Log]]` / `[[Call Log|Call-Log]]` / `[[Log|Call Log]]`.
 
 ### Inlining
 
@@ -81,6 +88,35 @@ to overlap the `body` element.
 PDF rendering is done using `wkhtmltopdf` which should be available in your `PATH`.
 It simply renders (more or less) the HTML version of your doc in PDF.
 
+### Page breaking
+
+By default all TOC pages starts from a new page. Also with default `css` you will never see your code block or image
+broken in two pages. To add additional page breaking use `style="page-break-before: always !important;` with empty `div` element.
+
+Before :
+
+```md
+## Interceptors
+
+Interceptors are a powerful mechanism that can monitor, rewrite, and retry calls. Here's a simple interceptor that logs the outgoing request and the incoming response.
+
+![Interceptors Diagram](https://raw.githubusercontent.com/wiki/square/okhttp/interceptors@2x.png)
+```
+
+![](https://raw.githubusercontent.com/yakivmospan/github-wikito-converter/develop/assets/img/page-break-1.png)
+
+After :
+
+```md
+<div style="page-break-before: always !important;"/>
+## Interceptors
+
+Interceptors are a powerful mechanism that can monitor, rewrite, and retry calls. Here's a simple interceptor that logs the outgoing request and the incoming response.
+
+![Interceptors Diagram](https://raw.githubusercontent.com/wiki/square/okhttp/interceptors@2x.png)
+```
+
+![](https://raw.githubusercontent.com/yakivmospan/github-wikito-converter/develop/assets/img/page-break-2.png)
 
 # Code highlighting
 

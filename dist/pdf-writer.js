@@ -65,7 +65,7 @@ var PdfWriter = (function (_BaseWriter) {
     key: "buildHeader",
     value: function buildHeader() {
 
-      var htmlHeader = "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>" + this.converter.getOption('title') + "</title>\n    " + this.getCssTags() + "\n    <style>" + this.getExtraCss() + "</style>\n    " + this.getJsTags() + "\n  </head>\n  <body id=\"page-top\" class=\"pdf-doc\">\n\n    <!-- Cover page -->\n    <div class='covertitle'>\n      <b>" + this.converter.getOption('title') + "</b>\n    </div>\n\n    <!-- Cover page -->\n    <div class='nav-container'>\n      <h1 class='toc'></h1><br>\n    " + this.converter.getToc().getHtml() + "\n    </div>\n";
+      var htmlHeader = "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>" + this.converter.getOption('title') + "</title>\n    " + this.getCssTags() + "\n    <style>" + this.getExtraCss() + "</style>\n    " + this.getJsTags() + "\n  </head>\n  <body id=\"page-top\" class=\"pdf-doc\">\n\n    <!-- Cover page -->\n    <div class='covertitle'>\n      <b>" + this.converter.getOption('title') + "</b>\n    </div>\n\n    <!-- Cover page -->\n    <div class='nav-container'>\n      <h1 class='toc'></h1>\n    " + this.converter.getToc().getHtml() + "\n    </div>\n";
       return htmlHeader;
     }
   }, {

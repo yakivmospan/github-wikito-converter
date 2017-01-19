@@ -27,8 +27,6 @@ class WikiConverter {
     }
 
     this.wikiPath = wiki_path
-    this.markdownConverter = new GWCMarkdown(this.wikiPath)
-
     this.computePaths()
         .computeOptions(options)
         .computeCssFiles()
@@ -44,9 +42,10 @@ class WikiConverter {
     return new Promise(function(resolve, reject) {
 
       GWCFinder.searchMarkdownFiles(self.wikiPath).then(function (result) {
-
         this.mdFiles = result.files
         this.mdAliases = result.aliases
+
+        this.markdownConverter = new GWCMarkdown(this.wikiPath, this.mdAliases)
         this.toc = new GWCToc(self)
 
         this.copyAssets()
@@ -76,14 +75,11 @@ class WikiConverter {
   computePages() {
     this.pages = []
     this.toc.getItems().forEach(item => {
-      let link = helpers.getPageIdFromFilenameOrLink(item.link)
-      if (this.mdAliases[link]) {
-        this.pages.push({
-          title: item.title,
-          file: this.mdAliases[link],
-          html: this.markdownConverter.convertMarkdownFile(this.mdAliases[link])
-        })
-      }
+      this.pages.push({
+        title: item.title,
+        file: this.mdAliases[item.pageId],
+        html: this.markdownConverter.convertMarkdownFile(this.mdAliases[item.pageId])
+      })
     }, this)
     return this
   }

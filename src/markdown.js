@@ -11,8 +11,9 @@ var marked = require('marked')
 
 class Markdown {
 
-  constructor(wikiPath) {
+  constructor(wikiPath, aliases) {
     this.wikiPath = wikiPath
+    this.wikiFileAliases = aliases
     this.tocItems = []
     this.firstTocLiClassProcessed = false
     this.setupMainRenderer()
@@ -75,12 +76,16 @@ class Markdown {
     }
 
     this.tocRenderer.link = function(href, title, text) {
-      self.tocItems.push({
-        title: text,
-        link: href
-      })
-      href = helpers.getPageIdFromFilenameOrLink(href)
-      return `<a href="#${href}">${text}</a>`
+      let pageId = helpers.getPageIdFromFilenameOrLink(href)
+      if(self.wikiFileAliases[pageId]){
+        self.tocItems.push({
+          title: text,
+          link: href,
+          pageId: pageId
+        })
+        href = `#${pageId}`
+      }
+      return `<a href="${href}">${text}</a>`
     }
 
     return this
@@ -95,7 +100,7 @@ class Markdown {
 
   convertMarkdownString(markdown, renderer) {
     renderer = renderer || this.mainRenderer
-    return marked(markdown, {
+    return marked(this.replaceGithubWikiLinks(markdown), {
       renderer: renderer
     })
   }
@@ -118,6 +123,43 @@ class Markdown {
     }
     return false
   }
+
+  /**
+   * @private
+   * @returns {String}
+   */
+  replaceGithubWikiLinks(markdown) {
+    // github supports [[...]] declaration of links. find all of them
+    return markdown.replace(/\[\[([^\]]+)\]\]/g, function(allPattern, link) {
+
+      // inside of brekets link can be added as:
+      // - page name only [[Calls]], [[Call-Log]];
+      // - link title only [[Call Log]];
+      // - link title and page name [[Call Log|Call-Log]], [[Log|Call Log]].
+
+      // search for link title
+      let linkTitle = link.replace(/\|([^\|]+)/, "")
+
+      // search for page name
+      let pageName = link.replace(/([^\|]+)\|/, "")
+
+      if(!linkTitle){
+        linkTitle = link
+      }
+
+      if (!pageName){
+        pageName = link
+      }
+
+      // make sure page name has correct format
+      link = pageName.replace(" ", "-")
+
+      // convert [[<link title> | <page name>]] to [<link title>](<page name>)
+      link = `[${linkTitle}](${pageName})`
+      return link
+    })
+  }
 }
+
 
 module.exports = Markdown
