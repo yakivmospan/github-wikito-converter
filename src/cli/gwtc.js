@@ -16,9 +16,15 @@ class Cli {
 
       .option("-f, --format <format>", "Format to convert to. Either html, pdf, or all [default: html]", 'html')
       .option("-o, --output <output-dir>", "Output dir [default: './']", './')
+      .option("-n, --file-name <file-name>", "Output file name [default: 'documentation']", 'documentation')
 
       .option("-t, --title <title>", "Wiki title [default: Documentation]", 'Documentation ')
       .option("-d, --disable-inline-assets", "Disable inlining of css & js in html document")
+
+      .option("--logo-img <logo-file>", "Logo image file")
+      .option("--footer <footer>" , "Wiki footer")
+
+      .option("--pdf-page-count", "Enable PDF page count")
 
       .option("--toc <toc-file>", "Wiki TOC file")
       .option("--toc-level <level>", "Table of contents deep level [default: 3]", 3)
@@ -38,7 +44,11 @@ class Cli {
     var options = {
       format: this.program.format,
       output: this.program.output,
+      filename: this.program.fileName,
       title: this.program.title,
+      logoImage: this.program.logoImg,
+      footer: this.program.footer,
+      pdfPageCount: this.program.pdfPageCount,
       tocFile: this.program.toc,
       tocLevel: this.program.tocLevel,
       highlightTheme: this.program.highlightTheme,

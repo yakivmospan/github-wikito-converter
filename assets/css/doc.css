@@ -315,6 +315,12 @@ span.float-right {
     padding-top: 60px !important;
 }
 
+.html-doc .footer {
+    font-size: 85%;
+    margin-top: 20px;
+    width: 250px;
+}
+
 .page:before {
     content:"";
     display:block;
@@ -333,6 +339,13 @@ span.float-right {
 .html-doc .nav-container {
     margin-top: 10px;
     position: relative;
+}
+
+.html-doc .logo-img {
+    padding: 10px;
+    margin:7px 0 0 0;
+    max-width:75%;
+    max-height:25%;
 }
 
 .html-doc .nav-container .toc:after {
@@ -399,8 +412,16 @@ span.float-right {
 }
 
 /*For PDF*/
+.pdf-doc{
+    padding: 0px;
+}
+
 .pdf-doc .navbar-toggle {
     display: none;
+}
+
+.pdf-doc .coverimg {
+    max-width:50%;
 }
 
 .pdf-doc .covertitle {

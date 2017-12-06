@@ -162,6 +162,9 @@ class WikiConverter {
 
     var def = {
       title : 'Documentation',
+      logoImage: null,
+      footer: null,
+      pdfPageCount: null,
       format : 'html',
       filename : 'documentation',
       output : path.resolve('./'),

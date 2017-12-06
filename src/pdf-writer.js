@@ -22,6 +22,8 @@ class PdfWriter extends BaseWriter {
     var html = this.buildHeader(),
         pages = this.converter.getPages(),
         filename = this.getFilename(),
+        footer = this.converter.getOption('footer'),
+        pdfPageCount = this.converter.getOption('pdfPageCount'),
         self = this
 
     logger.debug('Generating pdf: %d pages to generate', pages.length)
@@ -35,7 +37,22 @@ class PdfWriter extends BaseWriter {
     html += this.buildFooter()
 
     return new Promise(function (resolve, reject) {
-      wkhtmltopdf(html, {toc : false, outline: true})
+      let options = {
+        toc : false, outline: true,
+        marginLeft: 10, marginRight: 10,
+        footerLine: false, footerSpacing: 2.5,
+        footerFontSize: 10, pageOffset: 0
+      }
+
+      if(footer){
+        options.footerLeft = footer
+      }
+
+      if(pdfPageCount){
+        options.footerRight = "[page]/[toPage]"
+      }
+
+      wkhtmltopdf(html, options)
         .on('end', function() {
           logger.info(self.getExtension() + ' file written: %s', filename)
           resolve(filename)
@@ -61,6 +78,9 @@ class PdfWriter extends BaseWriter {
   <body id="page-top" class="pdf-doc">
 
     <!-- Cover page -->
+
+    ${this.getLogoImage()}
+
     <div class='covertitle'>
       <b>${this.converter.getOption('title')}</b>
     </div>
@@ -81,6 +101,9 @@ class PdfWriter extends BaseWriter {
 </html>`
 
     return footer
+  }
+  createImageLogoTag(path) {
+        return `<img class="coverimg" src="${path}"/>`
   }
 }
 

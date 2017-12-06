@@ -53,14 +53,23 @@ class HtmlWriter extends BaseWriter {
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-
-          </ul>
+          ${this.getLogoImage()}
         </div><!--/.nav-collapse -->
       </div>
     </div>
     <div id="documentation-container" class="container">
       <div class="row">
-        <div class="col-md-3"><div class="nav-container"><div class="nav-inner" id="scroll-spy"><span class="toc"></span>${this.converter.getToc().getHtml()}</div></div></div>
+        <div class="col-md-3">
+          <div class="nav-container">
+            <div class="nav-inner" id="scroll-spy">
+              <span class="toc"></span>
+              ${this.converter.getToc().getHtml()}
+              ${this.getFooter()}
+            </div>
+          </div>
+        </div>
+
+
         <div class="col-md-9">
 `
     return htmlHeader
@@ -77,6 +86,19 @@ class HtmlWriter extends BaseWriter {
   </script>
 </html>`
     return footer
+  }
+
+  createImageLogoTag(path) {
+        return `
+              </ul>
+                <ul class="nav navbar-nav navbar-right gwc-navbar-right">
+                <li><img class="logo-img" src="${path}"></li>
+              </ul>`
+  }
+
+  getFooter() {
+    let footerOption = this.converter.getOption('footer')
+    return footerOption ? `<div class="footer">${footerOption}</div>` : ''
   }
 
 }

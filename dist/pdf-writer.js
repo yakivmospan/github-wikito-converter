@@ -42,6 +42,8 @@ var PdfWriter = (function (_BaseWriter) {
       var html = this.buildHeader(),
           pages = this.converter.getPages(),
           filename = this.getFilename(),
+          footer = this.converter.getOption('footer'),
+          pdfPageCount = this.converter.getOption('pdfPageCount'),
           self = this;
 
       logger.debug('Generating pdf: %d pages to generate', pages.length);
@@ -55,7 +57,22 @@ var PdfWriter = (function (_BaseWriter) {
       html += this.buildFooter();
 
       return new Promise((function (resolve, reject) {
-        wkhtmltopdf(html, { toc: false, outline: true }).on('end', function () {
+        var options = {
+          toc: false, outline: true,
+          marginLeft: 10, marginRight: 10,
+          footerLine: false, footerSpacing: 2.5,
+          footerFontSize: 10, pageOffset: 0
+        };
+
+        if (footer) {
+          options.footerLeft = footer;
+        }
+
+        if (pdfPageCount) {
+          options.footerRight = "[page]/[toPage]";
+        }
+
+        wkhtmltopdf(html, options).on('end', function () {
           logger.info(self.getExtension() + ' file written: %s', filename);
           resolve(filename);
         }).on('error', reject).pipe(fs.createWriteStream(filename));
@@ -65,7 +82,7 @@ var PdfWriter = (function (_BaseWriter) {
     key: "buildHeader",
     value: function buildHeader() {
 
-      var htmlHeader = "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>" + this.converter.getOption('title') + "</title>\n    " + this.getCssTags() + "\n    <style>" + this.getExtraCss() + "</style>\n    " + this.getJsTags() + "\n  </head>\n  <body id=\"page-top\" class=\"pdf-doc\">\n\n    <!-- Cover page -->\n    <div class='covertitle'>\n      <b>" + this.converter.getOption('title') + "</b>\n    </div>\n\n    <!-- Cover page -->\n    <div class='nav-container'>\n      <h1 class='toc'></h1>\n    " + this.converter.getToc().getHtml() + "\n    </div>\n";
+      var htmlHeader = "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>" + this.converter.getOption('title') + "</title>\n    " + this.getCssTags() + "\n    <style>" + this.getExtraCss() + "</style>\n    " + this.getJsTags() + "\n  </head>\n  <body id=\"page-top\" class=\"pdf-doc\">\n\n    <!-- Cover page -->\n\n    " + this.getLogoImage() + "\n\n    <div class='covertitle'>\n      <b>" + this.converter.getOption('title') + "</b>\n    </div>\n\n    <!-- Cover page -->\n    <div class='nav-container'>\n      <h1 class='toc'></h1>\n    " + this.converter.getToc().getHtml() + "\n    </div>\n";
       return htmlHeader;
     }
   }, {
@@ -74,6 +91,11 @@ var PdfWriter = (function (_BaseWriter) {
       var footer = "\n  </body>\n</html>";
 
       return footer;
+    }
+  }, {
+    key: "createImageLogoTag",
+    value: function createImageLogoTag(path) {
+      return "<img class=\"coverimg\" src=\"" + path + "\"/>";
     }
   }]);
 

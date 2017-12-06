@@ -46,7 +46,7 @@ var HtmlWriter = (function (_BaseWriter) {
     key: "buildHeader",
     value: function buildHeader() {
 
-      var htmlHeader = "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>" + this.converter.getOption('title') + "</title>\n    " + this.getCssTags() + "\n    <style>" + this.getExtraCss() + "</style>\n    " + this.getJsTags() + "\n  </head>\n  <body id=\"page-top\" class=\"html-doc\">\n    <!-- Fixed navbar -->\n    <div class=\"navbar navbar-default navbar-fixed-top\">\n      <div class=\"container\">\n        <div class=\"navbar-header\">\n          <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">\n            <span class=\"sr-only\">Toggle navigation</span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n          </button>\n          <a class=\"navbar-brand doc-title\" href=\"#page-top\">" + this.converter.getOption('title') + "</a>\n        </div>\n        <div id=\"navbar\" class=\"navbar-collapse collapse\">\n          <ul class=\"nav navbar-nav\">\n\n          </ul>\n        </div><!--/.nav-collapse -->\n      </div>\n    </div>\n    <div id=\"documentation-container\" class=\"container\">\n      <div class=\"row\">\n        <div class=\"col-md-3\"><div class=\"nav-container\"><div class=\"nav-inner\" id=\"scroll-spy\"><span class=\"toc\"></span>" + this.converter.getToc().getHtml() + "</div></div></div>\n        <div class=\"col-md-9\">\n";
+      var htmlHeader = "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>" + this.converter.getOption('title') + "</title>\n    " + this.getCssTags() + "\n    <style>" + this.getExtraCss() + "</style>\n    " + this.getJsTags() + "\n  </head>\n  <body id=\"page-top\" class=\"html-doc\">\n    <!-- Fixed navbar -->\n    <div class=\"navbar navbar-default navbar-fixed-top\">\n      <div class=\"container\">\n        <div class=\"navbar-header\">\n          <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">\n            <span class=\"sr-only\">Toggle navigation</span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n          </button>\n          <a class=\"navbar-brand doc-title\" href=\"#page-top\">" + this.converter.getOption('title') + "</a>\n        </div>\n        <div id=\"navbar\" class=\"navbar-collapse collapse\">\n          <ul class=\"nav navbar-nav\">\n          " + this.getLogoImage() + "\n        </div><!--/.nav-collapse -->\n      </div>\n    </div>\n    <div id=\"documentation-container\" class=\"container\">\n      <div class=\"row\">\n        <div class=\"col-md-3\">\n          <div class=\"nav-container\">\n            <div class=\"nav-inner\" id=\"scroll-spy\">\n              <span class=\"toc\"></span>\n              " + this.converter.getToc().getHtml() + "\n              " + this.getFooter() + "\n            </div>\n          </div>\n        </div>\n\n\n        <div class=\"col-md-9\">\n";
       return htmlHeader;
     }
   }, {
@@ -54,6 +54,17 @@ var HtmlWriter = (function (_BaseWriter) {
     value: function buildFooter() {
       var footer = "\n        </div> <!-- /div.col-md-9 -->\n      </div> <!-- /div.row -->\n    </div> <!-- /div.container -->\n  </body>\n  <script>\n    $('body').scrollspy({ target: '#scroll-spy', offset: 40 })\n  </script>\n</html>";
       return footer;
+    }
+  }, {
+    key: "createImageLogoTag",
+    value: function createImageLogoTag(path) {
+      return "\n              </ul>\n                <ul class=\"nav navbar-nav navbar-right gwc-navbar-right\">\n                <li><img class=\"logo-img\" src=\"" + path + "\"></li>\n              </ul>";
+    }
+  }, {
+    key: "getFooter",
+    value: function getFooter() {
+      var footerOption = this.converter.getOption('footer');
+      return footerOption ? "<div class=\"footer\">" + footerOption + "</div>" : '';
     }
   }]);
 

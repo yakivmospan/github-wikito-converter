@@ -39,12 +39,16 @@ gwtc ./github-wikito-converter.wiki
     -V, --version                output the version number
     -f, --format <format>        Format to convert to. Either html, pdf, or all [default: html]
     -o, --output <output-dir>    Output dir [default: './']
+    -n, --file-name <file-name>  Output file name [default: documentation]
     -t, --title <title>          Wiki title [default: Documentation]
     -d, --disable-inline-assets  Disable inlining of images, css and js in html document
+    --logo-img <logo-file>       Logo image file
+    --footer <footer>            Wiki footer
     --toc <toc-file>             Wiki TOC file
     --toc-level <level>          Table of contents deep level [default: 3]
     --highlight-theme <theme>    Highlighter theme [default: github]
     --css <css-file>             Additional CSS file
+    --pdf-page-count             Enable PDF page count
     -v --verbose                 Verbose mode
 ```
 

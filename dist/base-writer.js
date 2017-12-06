@@ -59,11 +59,6 @@ var BaseWriter = (function () {
       return this.getAssetsTags(this.converter.getJsFiles(), 'js').join('\n');
     }
   }, {
-    key: 'getLimedocsGeneratedImgData',
-    value: function getLimedocsGeneratedImgData() {
-      return datauri(path.resolve(__dirname, '../assets/images/Limedocs-generated.png'));
-    }
-  }, {
     key: 'getExtraCss',
     value: function getExtraCss() {
       var tocLevel = this.converter.getOption('tocLevel'),
@@ -91,6 +86,23 @@ var BaseWriter = (function () {
       }
 
       return this.converter.getOption('disableInlineAssets') ? util.format(tplOut, path.basename(file)) : util.format(tplIn, fs.readFileSync(file, { encoding: 'utf8' }));
+    }
+  }, {
+    key: 'createImageLogoTag',
+    value: function createImageLogoTag(path) {
+      throw new Error('You must define an createImageLogoTag(path) in your writer');
+    }
+  }, {
+    key: 'getLogoImage',
+    value: function getLogoImage() {
+      var logoPath = this.getLogoImgPath();
+      return logoPath ? this.createImageLogoTag(logoPath) : '';
+    }
+  }, {
+    key: 'getLogoImgPath',
+    value: function getLogoImgPath() {
+      var logoOption = this.converter.getOption('logoImage');
+      return logoOption ? datauri(path.resolve(logoOption)) : logoOption;
     }
   }]);
 

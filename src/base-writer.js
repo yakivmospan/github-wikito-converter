@@ -46,10 +46,6 @@ class BaseWriter {
     return this.getAssetsTags(this.converter.getJsFiles(), 'js').join('\n')
   }
 
-  getLimedocsGeneratedImgData() {
-    return datauri(path.resolve(__dirname, '../assets/images/Limedocs-generated.png'))
-  }
-
   getExtraCss() {
     var tocLevel = this.converter.getOption('tocLevel'),
       tocLevelBaseCss = '> .nav > li '
@@ -76,6 +72,20 @@ class BaseWriter {
     return this.converter.getOption('disableInlineAssets') ?
       util.format(tplOut, path.basename(file)):
       util.format(tplIn, fs.readFileSync(file, {encoding : 'utf8'}))
+  }
+
+  createImageLogoTag(path) {
+    throw new Error('You must define an createImageLogoTag(path) in your writer')
+  }
+
+  getLogoImage(){
+    let logoPath = this.getLogoImgPath();
+    return logoPath ? this.createImageLogoTag(logoPath) : ''
+  }
+
+  getLogoImgPath() {
+    let logoOption = this.converter.getOption('logoImage')
+    return logoOption ? datauri(path.resolve(logoOption)) : logoOption
   }
 
 }
