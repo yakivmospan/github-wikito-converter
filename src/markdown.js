@@ -152,7 +152,7 @@ class Markdown {
       }
 
       // make sure page name has correct format
-      link = pageName.replace(" ", "-")
+      pageName = pageName.replace(/ /g, "-")
 
       // convert [[<link title> | <page name>]] to [<link title>](<page name>)
       link = `[${linkTitle}](${pageName})`

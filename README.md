@@ -11,8 +11,18 @@ Check out sample [HTML](https://github.com/yakivmospan/github-wikito-converter/b
 
 # Installation
 
+## Public version
+
 ```bash
 npm install -g github-wikito-converter
+```
+
+## Local version
+
+Download `github-wikito-converter` sources, open `termial` at the root the folder, and run:
+
+```bash
+npm run build-and-install-g
 ```
 
 # Usage

@@ -9,7 +9,7 @@ class Helpers {
     if (base.substr(-3) === '.md') {
       base = base.substr(0, base.length - 3)
     }
-    return base.replace(/([^a-z0-9\-_~]+)/gi, '')
+    return base.replace(/([^a-z0-9\-_~.]+)/gi, '')
   }
 
 }
