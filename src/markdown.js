@@ -26,8 +26,11 @@ class Markdown {
     this.mainRenderer = new marked.Renderer()
 
     this.mainRenderer.code = function(code, lang) {
-      code = lang === undefined ? highlight.highlightAuto(code) : highlight
-        .highlight(lang, code)
+      if (lang && highlight.getLanguage(lang)) {
+        code = highlight.highlight(lang, code, true);
+      } else {
+        code = highlight.highlightAuto(code);
+      }
       return `<pre class="hljs">${code.value}</pre>`
     }
 

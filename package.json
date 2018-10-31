@@ -1,6 +1,6 @@
 {
   "name": "github-wikito-converter",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Generate HTML & PDF documentation from Github wiki or any other markdown-based wiki.",
   "keywords": [
     "wiki",
