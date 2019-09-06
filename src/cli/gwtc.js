@@ -27,6 +27,7 @@ class Cli {
       .option("--pdf-page-count", "Enable PDF page count")
 
       .option("--toc <toc-file>", "Wiki TOC file")
+      .option("--toctitle <toc title>", "Title of the toc [default: Table of contents]", "Table of contents")
       .option("--toc-level <level>", "Table of contents deep level [default: 3]", 3)
 
       .option("--highlight-theme <theme>", "Highlighter theme [default: github]", 'github')
@@ -49,6 +50,7 @@ class Cli {
       logoImage: this.program.logoImg,
       footer: this.program.footer,
       pdfPageCount: this.program.pdfPageCount,
+      tocTitle: this.program.toctitle,
       tocFile: this.program.toc,
       tocLevel: this.program.tocLevel,
       highlightTheme: this.program.highlightTheme,
