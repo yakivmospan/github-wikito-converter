@@ -49,9 +49,9 @@
     "iojs": ">= 1.0"
   },
   "author": "Yakiv Mospan <yakiv.mospan@gmail.com> (https://github.com/yakivmospan)",
-  "repository" :{
-     "type" : "git"
-    , "url" : "https://github.com/yakivmospan/github-wikito-converter"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yakivmospan/github-wikito-converter"
   },
   "license": "MIT",
   "dependencies": {

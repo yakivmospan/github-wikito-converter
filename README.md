@@ -59,6 +59,7 @@ gwtc ./github-wikito-converter.wiki
     --logo-img <logo-file>       Logo image file
     --footer <footer>            Wiki footer
     --toc <toc-file>             Wiki TOC file
+    --toctitle <toc title>       Title of the toc [default: Table of contents] (default: "Table of contents")
     --toc-level <level>          Table of contents deep level [default: 3]
     --highlight-theme <theme>    Highlighter theme [default: github]
     --css <css-file>             Additional CSS file
