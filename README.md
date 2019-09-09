@@ -9,6 +9,10 @@ Check out sample [HTML](https://github.com/yakivmospan/github-wikito-converter/b
 - [Node.js](https://nodejs.org/) or [io.js](https://iojs.org/en/index.html)
 - [wkhtmltopdf](http://wkhtmltopdf.org/downloads.html) (only necessary for pdf output format)
 
+Note: The patched-QT version of `wkhtmltopdf` is required for pdf export. See issue ([#39][i39]) for details.
+
+[i39]: https://github.com/yakivmospan/github-wikito-converter/issues/39
+
 # Installation
 
 ## Public version
@@ -55,6 +59,7 @@ gwtc ./github-wikito-converter.wiki
     --logo-img <logo-file>       Logo image file
     --footer <footer>            Wiki footer
     --toc <toc-file>             Wiki TOC file
+    --toctitle <toc title>       Title of the toc [default: Table of contents] (default: "Table of contents")
     --toc-level <level>          Table of contents deep level [default: 3]
     --highlight-theme <theme>    Highlighter theme [default: github]
     --css <css-file>             Additional CSS file

@@ -1,6 +1,6 @@
 {
   "name": "github-wikito-converter",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Generate HTML & PDF documentation from Github wiki or any other markdown-based wiki.",
   "keywords": [
     "wiki",
@@ -49,9 +49,9 @@
     "iojs": ">= 1.0"
   },
   "author": "Yakiv Mospan <yakiv.mospan@gmail.com> (https://github.com/yakivmospan)",
-  "repository" :{
-     "type" : "git"
-    , "url" : "https://github.com/yakivmospan/github-wikito-converter"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yakivmospan/github-wikito-converter"
   },
   "license": "MIT",
   "dependencies": {

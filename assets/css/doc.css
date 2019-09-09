@@ -256,10 +256,6 @@ span.float-right {
     padding-left: 0px;
 }
 
-.nav-container .toc:after {
-  content: "Table of contents";
-}
-
 .nav {
     margin:0;
 }
@@ -348,7 +344,7 @@ span.float-right {
     max-height:25%;
 }
 
-.html-doc .nav-container .toc:after {
+.html-doc .nav-container .toc {
     display: block;
     color:#888;
     text-transform: uppercase;
