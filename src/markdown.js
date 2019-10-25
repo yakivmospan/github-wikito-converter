@@ -35,7 +35,8 @@ class Markdown {
     }
 
     this.mainRenderer.link = function(href, title, text) {
-      if (!href.match(/^https?:\/\//) || self.isTocLink(href)) {
+      if (!(href.match(/^https?:\/\//) || href.match(/^\/uploads\//)) ||
+          self.isTocLink(href)) {
         href = '#' + helpers.getPageIdFromFilenameOrLink(href)
       }
       return `<a href="${href}">${text}</a>`
