@@ -24,4 +24,11 @@ describe('Markdown', function() {
     })
   })
 
+  describe('.convertMarkdownFileWithPlantuml', function() {
+    it('should return html', function () {
+      var html = m.convertMarkdownFile(fixtures.samples[3] + '/Foo.md')
+      html.trim().should.equal('<h1 id="plantuml">Plantuml</h1>\n<img alt="plantuml-diagram" src="http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuNBAJrBGjLDmpCbCJbMmKiX8pSd9vt98pKi1IW80"/><img alt="plantuml-diagram" src="http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuNBAJrBGjLDmpCbCJbMmKiX8pSd9LqXCJypCut98pKi1AW40"/>')
+    })
+  })
+
 })

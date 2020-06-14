@@ -66,6 +66,7 @@
     "marked": "^0.3.6",
     "node-dir": "^0.1.9",
     "open": "0.0.5",
+    "plantuml-encoder": "^1.4.0",
     "winston": "^1.0.1",
     "wkhtmltopdf": "^0.1.5"
   },
