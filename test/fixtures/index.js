@@ -13,5 +13,6 @@ var path = require('path')
 exports.samples = [
   path.join(__dirname, 'samples', '0'),
   path.join(__dirname, 'samples', '1'),
-  path.join(__dirname, 'samples', '2')
+  path.join(__dirname, 'samples', '2'),
+  path.join(__dirname, 'samples', '3')
 ]

@@ -31,12 +31,16 @@ var Markdown = (function () {
       this.mainRenderer = new marked.Renderer();
 
       this.mainRenderer.code = function (code, lang) {
-        if (lang && highlight.getLanguage(lang)) {
-          code = highlight.highlight(lang, code, true);
+        if (lang && ['plantuml', 'puml'].includes(lang)) {
+          return '<img alt="plantuml-diagram" src="' + helpers.getPlantEncoded(code) + '"/>';
         } else {
-          code = highlight.highlightAuto(code);
+          if (lang && highlight.getLanguage(lang)) {
+            code = highlight.highlight(lang, code, true);
+          } else {
+            code = highlight.highlightAuto(code);
+          }
+          return '<pre class="hljs">' + code.value + '</pre>';
         }
-        return '<pre class="hljs">' + code.value + '</pre>';
       };
 
       this.mainRenderer.link = function (href, title, text) {
