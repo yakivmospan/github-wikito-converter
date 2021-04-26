@@ -39,6 +39,7 @@ var Finder = (function () {
 
         dir.readFiles(wikiPath, dirOpts, function (err, content, filename, next) {
           if (!err) {
+            filename = filename.toLowerCase();
             mdFiles[filename] = content;
             var base = path.basename(filename);
             aliases[base.substr(0, base.length - 3)] = filename;
