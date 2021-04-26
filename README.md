@@ -9,7 +9,7 @@ Check out sample [HTML](https://github.com/yakivmospan/github-wikito-converter/b
 - [Node.js](https://nodejs.org/) or [io.js](https://iojs.org/en/index.html)
 - [wkhtmltopdf](http://wkhtmltopdf.org/downloads.html) (only necessary for pdf output format)
 
-Note: The patched-QT version of `wkhtmltopdf` is required for pdf export. See issue ([#39][i39]) for details.
+Note: The patched-QT version of `wkhtmltopdf` is required for pdf export. Without it, `gwtc` output can be found as an empty pdf file. See issue ([#39][i39]) for details.
 
 [i39]: https://github.com/yakivmospan/github-wikito-converter/issues/39
 

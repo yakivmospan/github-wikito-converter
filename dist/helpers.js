@@ -5,6 +5,7 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var path = require('path');
+var plantumlEncoder = require('plantuml-encoder');
 
 var Helpers = (function () {
   function Helpers() {
@@ -19,6 +20,11 @@ var Helpers = (function () {
         base = base.substr(0, base.length - 3);
       }
       return base.replace(/([^a-z0-9\-_~.]+)/gi, '');
+    }
+  }, {
+    key: 'getPlantEncoded',
+    value: function getPlantEncoded(code) {
+      return 'http://www.plantuml.com/plantuml/svg/' + plantumlEncoder.encode(code);
     }
   }]);
 

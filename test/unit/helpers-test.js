@@ -18,4 +18,13 @@ describe('Helpers', function() {
       id.should.equal('index~2-Foo_bar-9876')
     })
   })
+
+  describe('.getPlantUmlImage()', function() {
+    it('should generate img with plantuml uri', function () {
+      var id = fixtures.Helpers.getPlantEncoded('@startuml\n' +
+          'Bob -> Alice : hello\n' +
+          '@enduml')
+      id.should.equal("http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuNBAJrBGjLDmpCbCJbMmKiX8pSd9vt98pKi1IW80")
+    })
+  })
 })
