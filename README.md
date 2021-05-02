@@ -1,10 +1,11 @@
+<!-- markdownlint-disable MD045 -->
 # Github Wikito Converter
 
 Github Wikito Converter allows you to generate HTML & PDF documentation from your Github wiki or any other markdown-based wiki. It is build on top of [Limedocs Wiki Converter](https://github.com/limedocs/limedocs-wiki-converter) and contains new features and bug fixes, check the [release notes](https://github.com/yakivmospan/github-wikito-converter/releases) to see them.
 
 Check out sample [HTML](https://github.com/yakivmospan/github-wikito-converter/blob/develop/sampels/okhttp.html) and [PDF](https://github.com/yakivmospan/github-wikito-converter/blob/develop/sampels/okhttp.pdf) files generated from [okhttp](https://github.com/square/okhttp/wiki) wiki.
 
-# Prerequesites
+## Prerequesites
 
 - [Node.js](https://nodejs.org/) or [io.js](https://iojs.org/en/index.html)
 - [wkhtmltopdf](http://wkhtmltopdf.org/downloads.html) (only necessary for pdf output format)
@@ -13,15 +14,15 @@ Note: The patched-QT version of `wkhtmltopdf` is required for pdf export. Withou
 
 [i39]: https://github.com/yakivmospan/github-wikito-converter/issues/39
 
-# Installation
+## Installation
 
-## Public version
+### Public version
 
 ```bash
 npm install -g github-wikito-converter
 ```
 
-## Local version
+### Local version
 
 Download `github-wikito-converter` sources, open `termial` at the root the folder, and run:
 
@@ -29,20 +30,21 @@ Download `github-wikito-converter` sources, open `termial` at the root the folde
 npm run build-and-install-g
 ```
 
-# Usage
+## Usage
 
-## Basic usage
+### Basic usage
 
 ```bash
-# Clone your github wiki for example
+## Clone your github wiki for example
 git clone https://github.com/yakivmospan/github-wikito-converter.wiki.git
 
-# Convert your wiki
+## Convert your wiki
 gwtc ./github-wikito-converter.wiki
 ```
 
-## Usage help
-```
+### Usage help
+
+```.
   Usage: gwtc [options] <wiki-dir>
 
   Convert a wiki
@@ -67,12 +69,11 @@ gwtc ./github-wikito-converter.wiki
     -v --verbose                 Verbose mode
 ```
 
+## Formats
 
-# Formats
+### HTML
 
-## HTML
-
-### Pages to be included in the documentation
+#### Pages to be included in the documentation
 
 By default, *Github Wikito Converter* will check for the following files to use as a table of contents (TOC):
 
@@ -86,7 +87,7 @@ When finding a TOC, *gwtc* will only generate pages linked from this TOC. Suppor
   Only those links that are placed in TOC will be converted to local page ids;
 - Github wiki links `[[Call Log]]` / `[[Call-Log]]` / `[[Call Log|Call-Log]]` / `[[Log|Call Log]]`.
 
-### Inlining
+#### Inlining
 
 By default, the HTML output format will generate a single-page HTML document of you wiki, with all assets inlined, such
 as images, css, and javascript. So all you need to transfer documentation (to a colleague for example) is to send him/her
@@ -95,24 +96,24 @@ this unique file.
 You can disable this inlining feature by passing `--disable-inline-assets` (or `-d`) such as several files will be
 generated for each of images, css and javascript files.
 
-### Table of contents (TOC)
+#### Table of contents (TOC)
 
 The *TOC* is rendered using a fixed div in the HTML documentation. You can use `--toc-level` to prevent the *TOC* div
 to overlap the `body` element.
 
-## PDF
+### PDF
 
-### Rendering
+#### Rendering
 
 PDF rendering is done using `wkhtmltopdf` which should be available in your `PATH`.
 It simply renders (more or less) the HTML version of your doc in PDF.
 
-### Page breaking
+#### Page breaking
 
 By default all TOC pages starts from a new page. Also with default `css` you will never see your code block or image
 broken in two pages. To add additional page breaking use `style="page-break-before: always !important;` with empty `div` element.
 
-Before :
+##### Before
 
 ```md
 ## Interceptors
@@ -124,7 +125,7 @@ Interceptors are a powerful mechanism that can monitor, rewrite, and retry calls
 
 ![](https://raw.githubusercontent.com/yakivmospan/github-wikito-converter/develop/assets/img/page-break-1.png)
 
-After :
+##### After
 
 ```md
 <div style="page-break-before: always !important;"/>
@@ -137,7 +138,7 @@ Interceptors are a powerful mechanism that can monitor, rewrite, and retry calls
 
 ![](https://raw.githubusercontent.com/yakivmospan/github-wikito-converter/develop/assets/img/page-break-2.png)
 
-# Code highlighting
+## Code highlighting
 
 Code highlighting is rendered using highlight.js.
 You can customize the theme used by using the `--highlight-theme` option. By default, `github` theme is used.
