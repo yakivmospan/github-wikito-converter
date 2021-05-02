@@ -173,7 +173,7 @@ var Markdown = (function () {
       // github supports [[...]] declaration of links. find all of them
       return markdown.replace(/\[\[([^\]]+)\]\]/g, function (allPattern, link) {
 
-        // inside of brekets link can be added as:
+        // inside of brackets link can be added as:
         // - page name only [[Calls]], [[Call-Log]];
         // - link title only [[Call Log]];
         // - link title and page name [[Call Log|Call-Log]], [[Log|Call Log]].
