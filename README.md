@@ -4,7 +4,7 @@ GitHub Wikito Converter allows you to generate HTML & PDF documentation from you
 
 Check out sample [HTML](https://github.com/yakivmospan/github-wikito-converter/blob/develop/sampels/okhttp.html) and [PDF](https://github.com/yakivmospan/github-wikito-converter/blob/develop/sampels/okhttp.pdf) files generated from [okhttp](https://github.com/square/okhttp/wiki) wiki.
 
-# Prerequesites
+# Prerequisites
 
 - [Node.js](https://nodejs.org/) or [io.js](https://iojs.org/en/index.html)
 - [wkhtmltopdf](http://wkhtmltopdf.org/downloads.html) (only necessary for pdf output format)
