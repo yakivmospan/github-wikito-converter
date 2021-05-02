@@ -107,7 +107,7 @@ class Markdown {
 
   convertMarkdownString(markdown, renderer) {
     renderer = renderer || this.mainRenderer
-    return marked(this.replaceGithubWikiLinks(markdown), {
+    return marked(this.replaceGitHubWikiLinks(markdown), {
       renderer: renderer
     })
   }
@@ -135,11 +135,11 @@ class Markdown {
    * @private
    * @returns {String}
    */
-  replaceGithubWikiLinks(markdown) {
+  replaceGitHubWikiLinks(markdown) {
     // github supports [[...]] declaration of links. find all of them
     return markdown.replace(/\[\[([^\]]+)\]\]/g, function(allPattern, link) {
 
-      // inside of brekets link can be added as:
+      // inside of brackets link can be added as:
       // - page name only [[Calls]], [[Call-Log]];
       // - link title only [[Call Log]];
       // - link title and page name [[Call Log|Call-Log]], [[Log|Call Log]].

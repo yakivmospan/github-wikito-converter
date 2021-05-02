@@ -114,7 +114,7 @@ var Markdown = (function () {
     key: 'convertMarkdownString',
     value: function convertMarkdownString(markdown, renderer) {
       renderer = renderer || this.mainRenderer;
-      return marked(this.replaceGithubWikiLinks(markdown), {
+      return marked(this.replaceGitHubWikiLinks(markdown), {
         renderer: renderer
       });
     }
@@ -168,12 +168,12 @@ var Markdown = (function () {
      * @returns {String}
      */
   }, {
-    key: 'replaceGithubWikiLinks',
-    value: function replaceGithubWikiLinks(markdown) {
+    key: 'replaceGitHubWikiLinks',
+    value: function replaceGitHubWikiLinks(markdown) {
       // github supports [[...]] declaration of links. find all of them
       return markdown.replace(/\[\[([^\]]+)\]\]/g, function (allPattern, link) {
 
-        // inside of brekets link can be added as:
+        // inside of brackets link can be added as:
         // - page name only [[Calls]], [[Call-Log]];
         // - link title only [[Call Log]];
         // - link title and page name [[Call Log|Call-Log]], [[Log|Call Log]].
