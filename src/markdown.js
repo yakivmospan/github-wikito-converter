@@ -107,7 +107,7 @@ class Markdown {
 
   convertMarkdownString(markdown, renderer) {
     renderer = renderer || this.mainRenderer
-    return marked(this.replaceGithubWikiLinks(markdown), {
+    return marked(this.replaceGitHubWikiLinks(markdown), {
       renderer: renderer
     })
   }
@@ -135,7 +135,7 @@ class Markdown {
    * @private
    * @returns {String}
    */
-  replaceGithubWikiLinks(markdown) {
+  replaceGitHubWikiLinks(markdown) {
     // github supports [[...]] declaration of links. find all of them
     return markdown.replace(/\[\[([^\]]+)\]\]/g, function(allPattern, link) {
 

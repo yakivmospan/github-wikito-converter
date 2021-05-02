@@ -1,6 +1,6 @@
-# Github Wikito Converter
+# GitHub Wikito Converter
 
-Github Wikito Converter allows you to generate HTML & PDF documentation from your Github wiki or any other markdown-based wiki. It is build on top of [Limedocs Wiki Converter](https://github.com/limedocs/limedocs-wiki-converter) and contains new features and bug fixes, check the [release notes](https://github.com/yakivmospan/github-wikito-converter/releases) to see them.
+GitHub Wikito Converter allows you to generate HTML & PDF documentation from your GitHub wiki or any other markdown-based wiki. It is build on top of [Limedocs Wiki Converter](https://github.com/limedocs/limedocs-wiki-converter) and contains new features and bug fixes, check the [release notes](https://github.com/yakivmospan/github-wikito-converter/releases) to see them.
 
 Check out sample [HTML](https://github.com/yakivmospan/github-wikito-converter/blob/develop/sampels/okhttp.html) and [PDF](https://github.com/yakivmospan/github-wikito-converter/blob/develop/sampels/okhttp.pdf) files generated from [okhttp](https://github.com/square/okhttp/wiki) wiki.
 
@@ -74,17 +74,17 @@ gwtc ./github-wikito-converter.wiki
 
 ### Pages to be included in the documentation
 
-By default, *Github Wikito Converter* will check for the following files to use as a table of contents (TOC):
+By default, *GitHub Wikito Converter* will check for the following files to use as a table of contents (TOC):
 
 - `_Toc.md`
-- `_Sidebar.md` (which is the default sidebar file on Github wikis)
+- `_Sidebar.md` (which is the default sidebar file on GitHub wikis)
 
 When finding a TOC, *gwtc* will only generate pages linked from this TOC. Supported link formats are:
 
 - Markdown links with local path `[Call Log](Call-Log)` / `[Log](Call-Log.md)` / `[Calls](/Call-Log.md)`;
 - Markdown links with remote (http/https) path `[Calls](https://github.com/yourrepo/someproject/wiki/Call-Log)`.
   Only those links that are placed in TOC will be converted to local page ids;
-- Github wiki links `[[Call Log]]` / `[[Call-Log]]` / `[[Call Log|Call-Log]]` / `[[Log|Call Log]]`.
+- GitHub wiki links `[[Call Log]]` / `[[Call-Log]]` / `[[Call Log|Call-Log]]` / `[[Log|Call Log]]`.
 
 ### Inlining
 

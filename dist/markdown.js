@@ -114,7 +114,7 @@ var Markdown = (function () {
     key: 'convertMarkdownString',
     value: function convertMarkdownString(markdown, renderer) {
       renderer = renderer || this.mainRenderer;
-      return marked(this.replaceGithubWikiLinks(markdown), {
+      return marked(this.replaceGitHubWikiLinks(markdown), {
         renderer: renderer
       });
     }
@@ -168,8 +168,8 @@ var Markdown = (function () {
      * @returns {String}
      */
   }, {
-    key: 'replaceGithubWikiLinks',
-    value: function replaceGithubWikiLinks(markdown) {
+    key: 'replaceGitHubWikiLinks',
+    value: function replaceGitHubWikiLinks(markdown) {
       // github supports [[...]] declaration of links. find all of them
       return markdown.replace(/\[\[([^\]]+)\]\]/g, function (allPattern, link) {
 
