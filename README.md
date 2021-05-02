@@ -23,7 +23,7 @@ npm install -g github-wikito-converter
 
 ## Local version
 
-Download `github-wikito-converter` sources, open `termial` at the root the folder, and run:
+Download `github-wikito-converter` sources, open `terminal` at the root the folder, and run:
 
 ```bash
 npm run build-and-install-g
