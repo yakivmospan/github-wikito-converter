@@ -6,16 +6,19 @@ var marked = require('marked')
   , path = require('path')
   , util = require('util')
   , datauri = require('datauri').sync
+  , logger = require('./logger')
   , helpers = require('./helpers')
 
 
 class Markdown {
 
-  constructor(wikiPath, aliases) {
+  constructor(wikiPath, aliases, options) {
     this.wikiPath = wikiPath
     this.wikiFileAliases = aliases
     this.tocItems = []
     this.firstTocLiClassProcessed = false
+    this.options = options || {}
+    this.currentPageId = ''
     this.setupMainRenderer()
       .setupTocRenderer()
   }
@@ -28,19 +31,45 @@ class Markdown {
     this.mainRenderer.code = function(code, lang) {
       if (lang && ['plantuml', 'puml'].includes(lang)) {
         return `<img alt="plantuml-diagram" src="${helpers.getPlantEncoded(code)}"/>`;
-      } else {
-        if (lang && highlight.getLanguage(lang)) {
-          code = highlight.highlight(lang, code, true);
-        } else {
-          code = highlight.highlightAuto(code);
-        }
+      }
+      if (lang && highlight.getLanguage(lang)) {
+        code = highlight.highlight(code, {language: lang, ignoreIllegals: true});
         return `<pre class="hljs">${code.value}</pre>`
       }
+      if (!self.options.disableHighlightAuto) {
+        code = highlight.highlightAuto(code);
+        return `<pre class="hljs">${code.value}</pre>`
+      }
+      return `<pre class="hljs">${code}</pre>`
+    }
+
+    this.mainRenderer.heading = function(text, level, raw) {
+      // links to heading inside of the page:
+      //   if current page defined then prefix heading id with file page id
+      // for example:
+      //   My-Page#section-1 is id of heading "Section 1" inside of MyPage.md file
+      //
+      // know issues of [^\w]+ pattern:
+      //   1.no unicode, ascii only, this is not how GitHub does it
+      //   2.extra - at the end if raw end with something like ++
+      let r = (self.currentPageId ? self.currentPageId + '#' : '') + raw.toLowerCase().replace(/[^\w]+/g, '-')
+      return '<h'
+        + level
+        + ' id="'
+        + r
+        + '">'
+        + text
+        + '</h'
+        + level
+        + '>\n'
     }
 
     this.mainRenderer.link = function(href, title, text) {
-      if (!href.match(/^https?:\/\//) || self.isTocLink(href)) {
-        href = '#' + helpers.getPageIdFromFilenameOrLink(href)
+      if ((!href.match(/^https?:\/\//i) && !href.match(/^mailto:/i)) || self.isTocLink(href)) {
+        href =
+          !href.startsWith('#') ? // if href starts with # then it is a ref to section inside of current page
+          '#' + href :
+          (self.currentPageId ? '#' + self.currentPageId : '') + href
       }
       return `<a href="${href}">${text}</a>`
     }
@@ -83,8 +112,8 @@ class Markdown {
     }
 
     this.tocRenderer.link = function(href, title, text) {
-      let pageId = helpers.getPageIdFromFilenameOrLink(href)
-      if(self.wikiFileAliases[pageId]){
+      let pageId = helpers.getPageIdFromFilename(href)
+      if (self.wikiFileAliases[pageId]) {
         self.tocItems.push({
           title: text,
           link: href,
@@ -100,22 +129,17 @@ class Markdown {
 
   convertTocMarkdownString(markdown) {
     return {
-      tocHtml: this.convertMarkdownString(markdown, this.tocRenderer),
+      tocHtml: marked(this.replaceGithubWikiLinks(markdown), {renderer: this.tocRenderer}),
       tocItems: this.tocItems
     }
   }
 
-  convertMarkdownString(markdown, renderer) {
-    renderer = renderer || this.mainRenderer
-    return marked(this.replaceGithubWikiLinks(markdown), {
-      renderer: renderer
-    })
-  }
-
-  convertMarkdownFile(markdown_file) {
-    return this.convertMarkdownString(fs.readFileSync(markdown_file, {
-      encoding: 'utf8'
-    }))
+  convertMarkdownFile(markdown_file, pageId) {
+    logger.info('page:', pageId)
+    //
+    this.currentPageId = pageId || ''
+    let md = fs.readFileSync(markdown_file, {encoding: 'utf8'})
+    return marked(md, {renderer: this.mainRenderer})
   }
 
   /**

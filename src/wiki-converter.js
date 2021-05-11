@@ -45,7 +45,9 @@ class WikiConverter {
         this.mdFiles = result.files
         this.mdAliases = result.aliases
 
-        this.markdownConverter = new GWCMarkdown(this.wikiPath, this.mdAliases)
+        this.markdownConverter = new GWCMarkdown(this.wikiPath,
+          this.mdAliases,
+          {disableHighlightAuto: this.options.disableHighlightAuto})
         this.toc = new GWCToc(self)
 
         this.copyAssets()
@@ -78,7 +80,8 @@ class WikiConverter {
       this.pages.push({
         title: item.title,
         file: this.mdAliases[item.pageId],
-        html: this.markdownConverter.convertMarkdownFile(this.mdAliases[item.pageId])
+        pageId: item.pageId,
+        html: this.markdownConverter.convertMarkdownFile(this.mdAliases[item.pageId], item.pageId)
       })
     }, this)
     return this
@@ -171,6 +174,7 @@ class WikiConverter {
       tocFile : GWCFinder.searchForFile(['_Toc.html', '_Sidebar.html', '_Toc.md', '_Sidebar.md'], this.wikiPath),
       tocLevel : 3, // between 1 and 4
       highlightTheme : 'github',
+      disableHighlightAuto: false,
       userCssFile : null
     }
 
