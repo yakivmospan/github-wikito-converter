@@ -8,14 +8,14 @@ var path = require('path')
 
 describe('Helpers', function() {
 
-  describe('.getPageIdFromFilenameOrLink()', function() {
+  describe('.getPageIdFromFilename()', function() {
     it('should not return .md suffix', function () {
-      var id = fixtures.Helpers.getPageIdFromFilenameOrLink('/path/to/index.md')
+      var id = fixtures.Helpers.getPageIdFromFilename('/path/to/index.md')
       id.should.equal('index')
     })
-    it('should remove special characters', function () {
-      var id = fixtures.Helpers.getPageIdFromFilenameOrLink('/path/to/index~2$-Foo _bar-9876')
-      id.should.equal('index~2-Foo_bar-9876')
+    it('should keep file name as is', function () {
+      var id = fixtures.Helpers.getPageIdFromFilename('/path/to/paramètre téléversée(s).md')
+      id.should.equal('paramètre téléversée(s)')
     })
   })
 
