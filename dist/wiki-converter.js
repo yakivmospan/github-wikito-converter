@@ -48,7 +48,7 @@ var WikiConverter = (function () {
           this.mdFiles = result.files;
           this.mdAliases = result.aliases;
 
-          this.markdownConverter = new GWCMarkdown(this.wikiPath, this.mdAliases);
+          this.markdownConverter = new GWCMarkdown(this.wikiPath, this.mdAliases, { disableHighlightAuto: this.options.disableHighlightAuto });
           this.toc = new GWCToc(self);
 
           this.copyAssets();
@@ -84,7 +84,8 @@ var WikiConverter = (function () {
         _this.pages.push({
           title: item.title,
           file: _this.mdAliases[item.pageId],
-          html: _this.markdownConverter.convertMarkdownFile(_this.mdAliases[item.pageId])
+          pageId: item.pageId,
+          html: _this.markdownConverter.convertMarkdownFile(_this.mdAliases[item.pageId], item.pageId)
         });
       }, this);
       return this;
@@ -181,6 +182,7 @@ var WikiConverter = (function () {
         tocFile: GWCFinder.searchForFile(['_Toc.html', '_Sidebar.html', '_Toc.md', '_Sidebar.md'], this.wikiPath),
         tocLevel: 3, // between 1 and 4
         highlightTheme: 'github',
+        disableHighlightAuto: false,
         userCssFile: null
       };
 
