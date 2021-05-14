@@ -17,8 +17,7 @@ class HtmlWriter extends BaseWriter {
     logger.debug('Generating html: %d pages to generate', pages.length)
 
     this.converter.getPages().forEach(page => {
-      var pageId = helpers.getPageIdFromFilenameOrLink(page.file)
-      html += `<p class="page" id="${pageId}"></p><h1>${page.title}</h1>\n` + page.html
+      html += `<p class="page" id="${page.pageId}"></p><h1>${page.title}</h1>\n` + page.html
     }, this)
 
     html += this.buildFooter()

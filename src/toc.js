@@ -4,6 +4,7 @@ var path = require('path')
   , fs = require('fs-extra')
   , util = require('util')
   , marked = require('marked')
+  , helpers = require('./helpers')
 
 class Toc {
 
@@ -60,7 +61,7 @@ class Toc {
   genTocFileContents() {
     return Object.keys(this.converter.getMarkdownFiles()).map(filename => {
       var basename = path.basename(filename)
-      return util.format('- [%s](%s)', basename, basename)
+      return util.format('- [%s](%s)', helpers.getPageIdFromFilename(basename), basename)
     }).join('\n')
   }
 }

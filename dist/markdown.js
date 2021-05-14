@@ -10,16 +10,19 @@ var marked = require('marked'),
     path = require('path'),
     util = require('util'),
     datauri = require('datauri').sync,
+    logger = require('./logger'),
     helpers = require('./helpers');
 
 var Markdown = (function () {
-  function Markdown(wikiPath, aliases) {
+  function Markdown(wikiPath, aliases, options) {
     _classCallCheck(this, Markdown);
 
     this.wikiPath = wikiPath;
     this.wikiFileAliases = aliases;
     this.tocItems = [];
     this.firstTocLiClassProcessed = false;
+    this.options = options || {};
+    this.currentPageId = '';
     this.setupMainRenderer().setupTocRenderer();
   }
 
@@ -33,19 +36,34 @@ var Markdown = (function () {
       this.mainRenderer.code = function (code, lang) {
         if (lang && ['plantuml', 'puml'].includes(lang)) {
           return '<img alt="plantuml-diagram" src="' + helpers.getPlantEncoded(code) + '"/>';
-        } else {
-          if (lang && highlight.getLanguage(lang)) {
-            code = highlight.highlight(lang, code, true);
-          } else {
-            code = highlight.highlightAuto(code);
-          }
+        }
+        if (lang && highlight.getLanguage(lang)) {
+          code = highlight.highlight(code, { language: lang, ignoreIllegals: true });
           return '<pre class="hljs">' + code.value + '</pre>';
         }
+        if (!self.options.disableHighlightAuto) {
+          code = highlight.highlightAuto(code);
+          return '<pre class="hljs">' + code.value + '</pre>';
+        }
+        return '<pre class="hljs">' + code + '</pre>';
+      };
+
+      this.mainRenderer.heading = function (text, level, raw) {
+        // links to heading inside of the page:
+        //   if current page defined then prefix heading id with file page id
+        // for example:
+        //   My-Page#section-1 is id of heading "Section 1" inside of MyPage.md file
+        //
+        // know issues of [^\w]+ pattern:
+        //   no unicode, this is not how GitHub does it
+        var r = (self.currentPageId ? self.currentPageId + '#' : '') + raw.toLowerCase().replace(/[^\w]+/g, '-').replace(/[^\w]*$/g, '');
+        return '<h' + level + (r ? ' id="' + r + '"' : '') + '>' + text + '</h' + level + '>\n';
       };
 
       this.mainRenderer.link = function (href, title, text) {
-        if (!href.match(/^https?:\/\//) || self.isTocLink(href)) {
-          href = '#' + helpers.getPageIdFromFilenameOrLink(href);
+        if (!href.match(/^https?:\/\//i) && !href.match(/^mailto:/i) || self.isTocLink(href)) {
+          href = !href.startsWith('#') ? // if href starts with # then it is a ref to section inside of current page
+          '#' + href : (self.currentPageId ? '#' + self.currentPageId : '') + href;
         }
         return '<a href="' + href + '">' + text + '</a>';
       };
@@ -88,7 +106,7 @@ var Markdown = (function () {
       };
 
       this.tocRenderer.link = function (href, title, text) {
-        var pageId = helpers.getPageIdFromFilenameOrLink(href);
+        var pageId = helpers.getPageIdFromFilename(href);
         if (self.wikiFileAliases[pageId]) {
           self.tocItems.push({
             title: text,
@@ -106,24 +124,18 @@ var Markdown = (function () {
     key: 'convertTocMarkdownString',
     value: function convertTocMarkdownString(markdown) {
       return {
-        tocHtml: this.convertMarkdownString(markdown, this.tocRenderer),
+        tocHtml: marked(this.replaceGithubWikiLinks(markdown), { renderer: this.tocRenderer }),
         tocItems: this.tocItems
       };
     }
   }, {
-    key: 'convertMarkdownString',
-    value: function convertMarkdownString(markdown, renderer) {
-      renderer = renderer || this.mainRenderer;
-      return marked(this.replaceGithubWikiLinks(markdown), {
-        renderer: renderer
-      });
-    }
-  }, {
     key: 'convertMarkdownFile',
-    value: function convertMarkdownFile(markdown_file) {
-      return this.convertMarkdownString(fs.readFileSync(markdown_file, {
-        encoding: 'utf8'
-      }));
+    value: function convertMarkdownFile(markdown_file, pageId) {
+      logger.info('page:', pageId);
+      //
+      this.currentPageId = pageId || '';
+      var md = fs.readFileSync(markdown_file, { encoding: 'utf8' });
+      return marked(md, { renderer: this.mainRenderer });
     }
 
     /**

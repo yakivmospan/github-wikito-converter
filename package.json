@@ -38,7 +38,7 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha --recursive test/unit",
     "coverage": "node --harmony --harmony_arrow_functions ./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha --report html -- -R spec --recursive test/unit",
-    "build": "rm -rf dist/* && ./node_modules/.bin/babel src --out-dir dist --source-maps",
+    "build": "./node_modules/.bin/babel src --out-dir dist --source-maps",
     "build-and-install-g": "npm run build && npm install -g"
   },
   "bin": {

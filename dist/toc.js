@@ -7,7 +7,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var path = require('path'),
     fs = require('fs-extra'),
     util = require('util'),
-    marked = require('marked');
+    marked = require('marked'),
+    helpers = require('./helpers');
 
 var Toc = (function () {
 
@@ -77,7 +78,7 @@ var Toc = (function () {
     value: function genTocFileContents() {
       return Object.keys(this.converter.getMarkdownFiles()).map(function (filename) {
         var basename = path.basename(filename);
-        return util.format('- [%s](%s)', basename, basename);
+        return util.format('- [%s](%s)', helpers.getPageIdFromFilename(basename), basename);
       }).join('\n');
     }
   }]);

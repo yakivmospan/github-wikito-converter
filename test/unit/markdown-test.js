@@ -10,22 +10,22 @@ describe('Markdown', function() {
 
   var m = new fixtures.Markdown(fixtures.samples[0])
 
-  describe('.convertMarkdownString', function() {
+  describe('.convertMarkdownFile', function() {
     it('should return html', function () {
-      var html = m.convertMarkdownString('# Foo\n[foo](bar)')
-      html.trim().should.equal('<h1 id="foo">Foo</h1>\n<p><a href="#bar">foo</a></p>')
+      var html = m.convertMarkdownFile(fixtures.samples[0] + '/Last.md', 'Last')
+      html.trim().should.equal('<h1 id="Last#last">Last</h1>\n<h2 id="Last#last-h2-header">Last h2 header</h2>\n<h2 id="Last#last-h3-header">Last h3 header</h2>')
     })
   })
 
-  describe('.convertMarkdownFile', function() {
-    it('should return html', function () {
-      var html = m.convertMarkdownFile(fixtures.samples[0] + '/test.md')
-      html.trim().should.equal('<h1 id="my-file">My file</h1>')
+  describe('.convertMarkdownPageLinks', function() {
+    it('should link page sections', function () {
+      var html = m.convertMarkdownFile(fixtures.samples[0] + '/Hdr.md', 'Hdr')
+      html.trim().should.equal('<h1 id="Hdr#page-top">Page Top</h1>\n<p><a href="#Hdr#it-is-c">It is c++</a></p>\n<h2 id="Hdr#it-is-c">It is c++</h2>')
     })
   })
 
   describe('.convertMarkdownFileWithPlantuml', function() {
-    it('should return html', function () {
+    it('should return html from PlantUML', function () {
       var html = m.convertMarkdownFile(fixtures.samples[3] + '/Foo.md')
       html.trim().should.equal('<h1 id="plantuml">Plantuml</h1>\n<img alt="plantuml-diagram" src="http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuNBAJrBGjLDmpCbCJbMmKiX8pSd9vt98pKi1IW80"/><img alt="plantuml-diagram" src="http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuNBAJrBGjLDmpCbCJbMmKiX8pSd9LqXCJypCut98pKi1AW40"/>')
     })

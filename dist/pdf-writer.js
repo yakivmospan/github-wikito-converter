@@ -49,8 +49,7 @@ var PdfWriter = (function (_BaseWriter) {
       logger.debug('Generating pdf: %d pages to generate', pages.length);
 
       pages.forEach(function (page) {
-        var pageId = helpers.getPageIdFromFilenameOrLink(page.file);
-        var pdfPage = _this.getPageBreaker(page.title, pageId) + page.html;
+        var pdfPage = _this.getPageBreaker(page.title, page.pageId) + page.html;
         html += pdfPage;
       }, this);
 

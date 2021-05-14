@@ -31,6 +31,7 @@ class Cli {
       .option("--toc-level <level>", "Table of contents deep level [default: 3]", 3)
 
       .option("--highlight-theme <theme>", "Highlighter theme [default: github]", 'github')
+      .option("--disable-highlight-auto", "Disable 'highlightAuto' (make it identical to GitHub and GitLab)")
 
       .option("--css <css-file>", "Additional CSS file")
       .option("-v --verbose", "Verbose mode")
@@ -56,7 +57,8 @@ class Cli {
       highlightTheme: this.program.highlightTheme,
       userCssFile: this.program.css,
       verbose: this.program.verbose || false,
-      disableInlineAssets: this.program.disableInlineAssets || false
+      disableInlineAssets: this.program.disableInlineAssets || false,
+      disableHighlightAuto: this.program.disableHighlightAuto || false
     }
 
     var ld = new WikiConverter(this.program.args[0], options)
