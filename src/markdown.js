@@ -50,14 +50,12 @@ class Markdown {
       //   My-Page#section-1 is id of heading "Section 1" inside of MyPage.md file
       //
       // know issues of [^\w]+ pattern:
-      //   1.no unicode, ascii only, this is not how GitHub does it
-      //   2.extra - at the end if raw end with something like ++
-      let r = (self.currentPageId ? self.currentPageId + '#' : '') + raw.toLowerCase().replace(/[^\w]+/g, '-')
+      //   no unicode, this is not how GitHub does it
+      let r = (self.currentPageId ? self.currentPageId + '#' : '') + raw.toLowerCase().replace(/[^\w]+/g, '-').replace(/[^\w]*$/g, '')
       return '<h'
         + level
-        + ' id="'
-        + r
-        + '">'
+        + (r ? ' id="' + r + '"' : '')
+        + '>'
         + text
         + '</h'
         + level

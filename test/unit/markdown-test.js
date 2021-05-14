@@ -17,8 +17,15 @@ describe('Markdown', function() {
     })
   })
 
+  describe('.convertMarkdownPageLinks', function() {
+    it('should link page sections', function () {
+      var html = m.convertMarkdownFile(fixtures.samples[0] + '/Hdr.md', 'Hdr')
+      html.trim().should.equal('<h1 id="Hdr#page-top">Page Top</h1>\n<p><a href="#Hdr#it-is-c">It is c++</a></p>\n<h2 id="Hdr#it-is-c">It is c++</h2>')
+    })
+  })
+
   describe('.convertMarkdownFileWithPlantuml', function() {
-    it('should return html', function () {
+    it('should return html from PlantUML', function () {
       var html = m.convertMarkdownFile(fixtures.samples[3] + '/Foo.md')
       html.trim().should.equal('<h1 id="plantuml">Plantuml</h1>\n<img alt="plantuml-diagram" src="http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuNBAJrBGjLDmpCbCJbMmKiX8pSd9vt98pKi1IW80"/><img alt="plantuml-diagram" src="http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuNBAJrBGjLDmpCbCJbMmKiX8pSd9LqXCJypCut98pKi1AW40"/>')
     })
